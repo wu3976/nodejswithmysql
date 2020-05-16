@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>datas</title></head>
+<body>
+<p>Data Queried:
+<table border = '1'>
+<tr><th>Field</th><th>Type</th><th>Null</th><th>Key</th><th>Default</th><th>Extra</th></tr>
+<tr><td>area_id</td><td>int(11)</td><td>NO</td><td>PRI</td><td>null</td><td></td></tr>
+<tr><td>name</td><td>varchar(30)</td><td>YES</td><td>UNI</td><td>null</td><td></td></tr>
+<tr><td>dreamer</td><td>varchar(30)</td><td>YES</td><td>MUL</td><td>null</td><td></td></tr>
+<tr><td>main_boss</td><td>varchar(30)</td><td>YES</td><td>MUL</td><td>null</td><td></td></tr>
+<tr><td>stag1</td><td>varchar(20)</td><td>YES</td><td></td><td>null</td><td></td></tr>
+<tr><td>stag2</td><td>varchar(20)</td><td>YES</td><td></td><td>null</td><td></td></tr>
+<tr><td>charm_list</td><td>int(11)</td><td>YES</td><td>MUL</td><td>null</td><td></td></tr>
+<tr><td>subarea_list</td><td>int(11)</td><td>YES</td><td>MUL</td><td>null</td><td></td></tr>
+<tr><td>hotspring_count</td><td>int(11)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>grub_count</td><td>int(11)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>facemask_count</td><td>int(11)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>soulvessel_count</td><td>int(11)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>chairs_count</td><td>int(11)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</table>
+<br>
+<form action="/query_result" method="post"><input type="submit" value="return"></form>
+</p>
+</body>
+</html>

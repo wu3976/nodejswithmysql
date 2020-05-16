@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>database lookup form</title>
+</head>
+<body>
+<form action="/lookup" method="post">
+    <label for="tableName">table:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+    <input type="text" id="tableName" name="tableName"><br>
+    <label for="columnNames">columns (seperate by comma):</label>
+    <input type="text" id="columnNames" name="columnNames" value="*"><br>
+    <input type="submit" value="LOOKUP">
+</form>
+</body>
+</html>
