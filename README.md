@@ -1,2 +1,2 @@
 # nodejswithmysql
-An online MySQL access system with NodeJS
+An online MySQL access system with NodeJS express
