@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>database insert form</title>
+</head>
+<body>
+<form action="/insert" method="post">
+    <label for="tableName">table:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</label>
+    <input type="text" id="tableName" name="tableName"><br>
+    <label for="columnNames">columns (seperated by comma):</label>
+    <input type="text" id="columnNames" name="columnNames" value="*"><br>
+    <label for="values">values (seperated by comma)*:&emsp;</label>
+    <input type="text" id="values" name="values"><br>
+    <input type="submit" value="INSERT">
+</form>
+<h5>*The value of string columns must be surrounded by double quotes</h5>
+</body>
+</html>

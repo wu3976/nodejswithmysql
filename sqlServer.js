@@ -5,7 +5,15 @@ const pathMod = require("path");
 const bpMod = require("body-parser");
 const utilMod = require("./utility");
 
-const processAndRedirect = (query, fileNameWOExt, res)=>{
+/**
+ * Make query to the database, generate HTML page based on the result,
+ * and redirect to next request
+ * @param query The query string that would be made to sql. STRING
+ * @param fileNameWOExt The name of file being written, without extension. STRING
+ * @param res The response object of an HTTP request. OBJECT: Response
+ * @param msg the message that would appear in HTML. STRING
+ */
+const processAndRedirect = (query, fileNameWOExt, res, msg)=>{
     sql.query(query, (err, result) => {
         if (err){
             res.redirect("/error?message=invalid_query");
@@ -13,8 +21,12 @@ const processAndRedirect = (query, fileNameWOExt, res)=>{
             let filePath = pathMod.join(__dirname, "static", fileNameWOExt + ".html");
             console.log(filePath);
             console.log(result);
-
-            utilMod.writeFile(result, filePath);
+            if (!Array.isArray(result)){
+                var arr = [];
+                arr.push(result);
+                result = arr;
+            }
+            utilMod.writeFile(result, filePath, msg);
             res.redirect("/query_result?filename=" + fileNameWOExt + "&type=html");
         }
     });
@@ -134,6 +146,10 @@ server.post("/tempRoute_2", (req, res) => {
     res.redirect("/lookup");
 });
 
+server.post("/tempRoute_3", (req, res) => {
+    res.redirect("/insert");
+});
+
 server.get("/describe", (req, res) => {
     res.sendFile(pathMod.join(__dirname, "static", "describeform.html"));
 });
@@ -142,7 +158,7 @@ server.post("/describe", (req, res) => {
     let query = `DESCRIBE ${req.body[`tableName`]}`;
     let name = "temp";
 
-    processAndRedirect(query, name, res);
+    processAndRedirect(query, name, res, `Information of ${req.body['tableName']}:`);
 });
 
 server.get("/lookup", (req, res) => {
@@ -163,7 +179,38 @@ server.post("/lookup", (req, res) => {
         query += ` FROM ${tableName};`;
         console.log(query);
     }
-    processAndRedirect(query, "temp", res);
+    processAndRedirect(query, "temp", res, `Data returned from ${req.body["tableName"]}:`);
+});
+
+server.get("/insert", (req, res) =>{
+    let path = pathMod.join(__dirname, "static", "insertform.html");
+    res.sendFile(path);
+});
+
+server.post("/insert", (req, res) => {
+    console.log(req.body);
+    let col_arr = utilMod.parseColumnNames(req.body['columnNames']);
+    let val_arr = utilMod.parseColumnNames(req.body['values']);
+    let query = `INSERT INTO ${req.body['tableName']}`;
+    let value_str = "";
+    for (let ele of val_arr){
+        value_str += `${ele},`;
+    }
+    value_str = value_str.substring(0, value_str.length - 1);
+
+    let column_str = "";
+    for (let ele of col_arr){
+        column_str += `${ele},`;
+    }
+    column_str = column_str.substring(0, column_str.length - 1);
+
+    if (col_arr.length === 1 && col_arr[0] === "*"){
+        query += ` VALUE(${value_str});`
+    } else {
+        query += `(${column_str}) VALUE(${value_str});`;
+    }
+    console.log(query);
+    processAndRedirect(query, "temp", res, `Query OK.<br>`);
 });
 
 server.get("/query_result", (req, res) =>{

@@ -26,13 +26,14 @@ const parseColumnNames = (str) => {
  * Write the datas from database into an HTML file.
  * @param data An array of data, in which each entry is a struct of column name -> column value
  * representing a row. [Object]
- * @param path The relative path of the output file. STRING
+ * @param path The absolute path of the output file. STRING
+ * @param msg The message that would appear before the table. STRING
  */
-const writeFile = (data, path) => {
+const writeFile = (data, path, msg) => {
     var outputHTML = fsMod.createWriteStream(path);
     outputHTML.write(`<!DOCTYPE html>\n<html lang="en">\n`);
     outputHTML.write(`<head><meta charset="UTF-8"><title>datas</title></head>\n`);
-    outputHTML.write(`<body>\n<p>Data Queried:\n<table border = '1'>\n`);
+    outputHTML.write(`<body>\n<p>${msg}\n<table border = '1'>\n`);
     data = JSON.parse(JSON.stringify(data));
     if (data.length > 0){
         outputHTML.write(`<tr>`);
@@ -56,6 +57,13 @@ const writeFile = (data, path) => {
 }
 
 /**
+ * The Internal CSS for welcome page.
+ * @type {string}
+ */
+const styleSheet = "#a\{font-family: Algerian; font-size: 50; color: rgba(87,161,143,0.73)\}\n";
+
+
+/**
  * print the main page of database access system in HTML
  * @param dbname Name of the database, STRING
  * @param insertable whether print button of insert data, BOOLEAN
@@ -65,9 +73,9 @@ const writeFile = (data, path) => {
 const writeWelcomePage = (dbname, insertable, path, table_arr) => {
     var outputHTML = fsMod.createWriteStream(path);
     outputHTML.write(`<!DOCTYPE html>\n<html lang="en">\n`);
-    outputHTML.write(`<head><meta charset="UTF-8"><title>${dbname}</title></head>\n`);
-    outputHTML.write(`<body>\n<p>\n<h1>Welcome to database ${dbname}!</h1><br>\n`
-        +`tables in databases: ${table_arr.toString()}<br>\n</p>\n<p>\n<span>\n`);
+    outputHTML.write(`<head><meta charset="UTF-8"><title>${dbname}</title>\n<style>\n${styleSheet}</style></head>\n`);
+    outputHTML.write(`<body>\n<p>\n<h1 id = "a">Welcome to database ${dbname}!</h1><br>\n`
+        +`tables in databases: <br><br>\n${tableOfDBTable(table_arr)}<br>\n</p>\n<p>\n<span>\n`);
     outputHTML.write(`<form action="/tempRoute_1" method="post">` +
         `<input type="submit" value="Describe tables"></form>\n`);
     outputHTML.write(`<form action="/tempRoute_2" method="post">` +
@@ -79,8 +87,23 @@ const writeWelcomePage = (dbname, insertable, path, table_arr) => {
     outputHTML.write(`</span>\n</p>\n</body>\n</html>`);
 }
 
+
+/**
+ * Get the HTML format of a table of all tables in database.
+ * @param arr An array of table names. [STRING]
+ * @return {string} The HTML representation of table.
+ */
+const tableOfDBTable = (arr) => {
+    result = "<table border='1'>\n<tr>\n";
+    for (let ele of arr){
+        result += `<td>${ele}</td>\n`
+    }
+    result += "</tr>\n</table>";
+    return result;
+};
+
 module.exports = {
     parseColumnNames : parseColumnNames,
     writeFile : writeFile,
-    writeWelcomePage : writeWelcomePage
+    writeWelcomePage : writeWelcomePage,
 }
