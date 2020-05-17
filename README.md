@@ -8,6 +8,7 @@ install the node interpreter: https://nodejs.org/en/, and then import my project
 firstly, change the database config to your database, and change the ip and port config.
 type in terminal: 
 > node sqlServer.js
+
 You may need to add node to path environmental variable before doing this. 
 
 3. make query. 
