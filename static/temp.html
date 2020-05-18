@@ -2,16 +2,18 @@
 <html lang="en">
 <head><meta charset="UTF-8"><title>datas</title></head>
 <body>
-<p>Data returned from charm:
+<p>Data returned from charm_type:
 <table border = '1'>
-<tr><th>charm_id</th><th>name</th><th>description</th><th>type</th><th>notch_cost</th></tr>
-<tr><td>0</td><td>Wayward Compass</td><td>Wayward Compass is a Charm in Hollow Knight. It shows the location of the Knight on the map. </td><td>aux</td><td>1</td></tr>
-<tr><td>1</td><td>Gathering Swarm</td><td>It shows the location of the Knight on the map.</td><td>aux</td><td>1</td></tr>
-<tr><td>2</td><td>Stalwart Shell</td><td>Stalwart Shell is a Charm in Hollow Knight. It increases invincibility frames and reduces hit recoil. This item primarily shines in some boss battles, especially ones where it is difficult to avoid getting hit. The longer invulnerability time can provide a window to attack a boss with impunity, potentially overwhelming them with sheer damage. 
-It is also useful in the Trial of the Fool, which features many encounters with enemies whose attacks are hard to dodge. </td><td>hit</td><td>2</td></tr>
-<tr><td>3</td><td>Soul Catcher</td><td>Soul Catcher is a Charm in Hollow Knight. It increases the amount of SOUL gained when hitting enemies with the nail. One of the earliest charms available in the game. Its effect is not drastic but it remains useful for quite a long time for healing purposes, especially in areas where enemies have attacks that are difficult to avoid or soul is scarce. </td><td>soul</td><td>2</td></tr>
-<tr><td>4</td><td>Shaman Stone</td><td>Shaman Stone is a Charm in Hollow Knight. It increases the damage and size of Spells. Since it increases Spell damage by 33-51% depending on the Spell, it is incredibly powerful, as it can be used to one-shot many enemies from safe ranges, or to deal more Spell damage to bosses. 
-Shaman Stone is incredibly useful for speedrunning, not only because of the damage boost it gives to spells, but also because of how fast and easy it is to acquire compared to other damage sources like Fragile Strength, Quick Slash, or Pale Ore. </td><td>spell</td><td>3</td></tr>
+<tr><th>type</th><th>description</th></tr>
+<tr><td>aux</td><td>Have auxiliary effects to knight</td></tr>
+<tr><td>cloud</td><td>Generate area of damage near the knight</td></tr>
+<tr><td>focus</td><td>help knight to better focus to recover masks</td></tr>
+<tr><td>hit</td><td>Produce after-effect after knight being hit. </td></tr>
+<tr><td>nail</td><td>Increase the nail capacity of knight</td></tr>
+<tr><td>soul</td><td>Provide more sources of soul for knight</td></tr>
+<tr><td>spell</td><td>Strengthen the spell abilities of the knight,
+    or enable knight to release more spell. </td></tr>
+<tr><td>summon</td><td>Summon some small entities to attack enemies or defensing knight. </td></tr>
 </table>
 <br>
 <form action="/query_result" method="post"><input type="submit" value="return"></form>

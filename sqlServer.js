@@ -4,7 +4,9 @@ const fsMod = require("fs");
 const pathMod = require("path");
 const bpMod = require("body-parser");
 const utilMod = require("./utility");
-
+/**
+ * @author Chenjie Wu
+ */
 /**
  * Make query to the database, generate HTML page based on the result,
  * and redirect to next request
@@ -37,7 +39,8 @@ const host = "localhost";
 const user = "root";
 const password = "753951"
 const dbname = "hollow_knight";
-const insertable = true; // allow insertion operation.
+const port = 3000;
+const insertable = false; // allow insertion operation to the database.
 
 // creates a connection of mysql database
 const sql = sqlMod.createConnection({
@@ -50,7 +53,7 @@ sql.connect((err) =>{
     if (err){
         throw err;
     } else {
-        console.log("MySQL connected");
+        console.log(`MySQL connected to database ${dbname}`);
     }
 });
 const server = expMod();
@@ -126,7 +129,7 @@ server.get("/", (req, res) => {
             console.log(table_arr);
             let fileName = "welcome";
             let path = pathMod.join(__dirname, "static", fileName + ".html");
-            utilMod.writeWelcomePage(dbname, insertable, path, table_arr);
+            utilMod.writeWelcomePage(dbname, insertable, path, table_arr );
             res.redirect("/home?filename=welcome&type=html");
         }
     });
@@ -155,9 +158,10 @@ server.get("/describe", (req, res) => {
 });
 
 server.post("/describe", (req, res) => {
+    console.log(req.body);
     let query = `DESCRIBE ${req.body[`tableName`]}`;
     let name = "temp";
-
+    console.log(`query: ${query}`);
     processAndRedirect(query, name, res, `Information of ${req.body['tableName']}:`);
 });
 
@@ -166,6 +170,7 @@ server.get("/lookup", (req, res) => {
 });
 
 server.post("/lookup", (req, res) => {
+    console.log(req.body);
     let tableName = req.body['tableName'];
     let columnNameArray = utilMod.parseColumnNames(req.body['columnNames']);
     var query = `SELECT `;
@@ -177,8 +182,8 @@ server.post("/lookup", (req, res) => {
         }
         query = query.substring(0, query.length - 1);
         query += ` FROM ${tableName};`;
-        console.log(query);
     }
+    console.log(query);
     processAndRedirect(query, "temp", res, `Data returned from ${req.body["tableName"]}:`);
 });
 
@@ -229,7 +234,7 @@ server.get("/error", (req, res) => {
    }
 });
 
-server.listen(3000, ()=>{
+server.listen(port, ()=>{
     console.log("Server started on port 3000");
 });
 
