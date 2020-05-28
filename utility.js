@@ -46,7 +46,7 @@ const writeFile = (data, path, msg) => {
     for (obj of data){
         outputHTML.write(`<tr>`);
         for (ele of Object.keys(obj)){
-            outputHTML.write(`<td>${obj[ele]}</td>`);
+            outputHTML.write(`<td>${obj[ele] === null ? "[No data]" : obj[ele]}</td>`);
         }
         outputHTML.write(`</tr>\n`);
     }
@@ -83,6 +83,8 @@ const writeWelcomePage = (dbname, insertable, path, table_arr) => {
     if (insertable){
         outputHTML.write(`<form action="/tempRoute_3" method="post">` +
             `<input type="submit" value="Insert data"></form>\n`);
+        outputHTML.write(`<form action="/tempRoute_4" method="post">` +
+            `<input type="submit" value="Delete data"></form>\n`);
     }
     outputHTML.write(`</span>\n</p>\n</body>\n</html>`);
 }

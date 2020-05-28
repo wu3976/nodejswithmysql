@@ -40,7 +40,7 @@ const user = "root";
 const password = "753951"
 const dbname = "hollow_knight";
 const port = 3000;
-const insertable = false; // allow insertion operation to the database.
+const insertable = true; // allow insertion operation to the database.
 
 // creates a connection of mysql database
 const sql = sqlMod.createConnection({
@@ -153,6 +153,10 @@ server.post("/tempRoute_3", (req, res) => {
     res.redirect("/insert");
 });
 
+server.post("/tempRoute_4", (req, res) => {
+    res.redirect("/delete");
+});
+
 server.get("/describe", (req, res) => {
     res.sendFile(pathMod.join(__dirname, "static", "describeform.html"));
 });
@@ -215,6 +219,19 @@ server.post("/insert", (req, res) => {
         query += `(${column_str}) VALUE(${value_str});`;
     }
     console.log(query);
+    processAndRedirect(query, "temp", res, `Query OK.<br>`);
+});
+
+server.get("/delete", (req, res) => {
+    res.sendFile(pathMod.join(__dirname, "static", "deleteform.html"))
+});
+
+server.post("/delete", (req, res) => {
+    console.log(req.body);
+    let col_Name = req.body['columnName'];
+    let value = req.body['valueName'];
+    let tableName = req.body['tableName']
+    let query = `DELETE FROM ${tableName} WHERE ${col_Name} = ${value};`;
     processAndRedirect(query, "temp", res, `Query OK.<br>`);
 });
 
